@@ -1,26 +1,44 @@
+import createHistory from 'history/createBrowserHistory';
 import ColorBlock from './ColorBlock';
 
-const block1 = new ColorBlock({ color: { r: 219, g: 58, b: 27 } });
+const history = createHistory();
+
+let brailleRGBs = decodeURIComponent(history.location.hash).substring(1).split(',') || [];
+
+const validBrailleColor = str => /^[\u2800-\u283f]{3}$/.test(str);
+
+const defaultPalette = '⠶⠱⠰,⠷⠞⠪,⠑⠴⠭,⠂⠴⠌,⠗⠄⠛,⠲⠲⠲'.split(',');
+
+for (let i = 0; i < 6; i++) {
+  if (brailleRGBs.length < (i + 1)) brailleRGBs.push(defaultPalette[i]);
+  else if (!validBrailleColor(brailleRGBs[i])) brailleRGBs[i] = defaultPalette[i];
+}
+
+const onUpdate = () => {
+  let hash = '';
+  hash += block1.getUnicode() + ',';
+  hash += block2.getUnicode() + ',';
+  hash += block3.getUnicode() + ',';
+  hash += block4.getUnicode() + ',';
+  hash += block5.getUnicode() + ',';
+  hash += block6.getUnicode();
+  history.replace({ pathname: '/', hash: hash });
+};
+
+const block1 = new ColorBlock({ braille: brailleRGBs[0], update: onUpdate });
 block1.getElement().appendTo('.palette');
 
-const block2 = new ColorBlock({ color: { r: 254, g: 209, b: 86 } });
+const block2 = new ColorBlock({ braille: brailleRGBs[1], update: onUpdate });
 block2.getElement().appendTo('.palette');
 
-const block4 = new ColorBlock({ color: { r: 44, g: 154, b: 183 } });
-block4.getElement().appendTo('.palette');
-
-const block3 = new ColorBlock({ color: { r: 68, g: 154, b: 136 } });
+const block3 = new ColorBlock({ braille: brailleRGBs[2], update: onUpdate });
 block3.getElement().appendTo('.palette');
 
-const block5 = new ColorBlock({ color: { r: 238, g: 131, b: 110 } });
+const block4 = new ColorBlock({ braille: brailleRGBs[3], update: onUpdate });
+block4.getElement().appendTo('.palette');
+
+const block5 = new ColorBlock({ braille: brailleRGBs[4], update: onUpdate });
 block5.getElement().appendTo('.palette');
 
-const block6 = new ColorBlock({ color: { r: 93, g: 92, b: 93 } });
+const block6 = new ColorBlock({ braille: brailleRGBs[5], update: onUpdate });
 block6.getElement().appendTo('.palette');
-
-
-// { r: 80, g: 81, b: 79 } });
-// { r: 242, g: 95, b: 92 } });
-// { r: 255, g: 224, b: 102 } });
-// { r: 36, g: 123, b: 160 } });
-// { r: 112, g: 193, b: 179 } });

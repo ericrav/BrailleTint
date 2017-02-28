@@ -17,18 +17,23 @@ export default class BrailleCell {
 
   // update all dot elements to match current value
   updateAllDots() {
-    // get bitstring from braille cell's current value
-    let bitstring = this.value.toString(2);
-    // pad with 0s so bitstring is length 6
-    bitstring = Array(6 - bitstring.length + 1).join('0') + bitstring;
     // iterate over bits
-    const bits = bitstring.split('');
+    const bits = this.getBits();
     for (let i = 1; i <= bits.length; i++) {
       // go from bitstring index to braille dot number
       const bitNumber = i <= 3 ? (4 - i) : (10 - i);
       if (bits[i - 1] === '1') this.element.children('.braille__dot--' + bitNumber).addClass('braille__dot--active');
       else this.element.children('.braille__dot--' + bitNumber).removeClass('braille__dot--active');
     }
+  }
+
+  getBits() {
+    // get bitstring from braille cell's current value
+    let bitstring = this.value.toString(2);
+    // pad with 0s so bitstring is length 6
+    bitstring = Array(6 - bitstring.length + 1).join('0') + bitstring;
+    // iterate over bits
+    return bitstring.split('');
   }
 
   // turn dot on or off and update cell value
@@ -55,6 +60,20 @@ export default class BrailleCell {
   // get current numerical value represented by dots in NUMBRL system
   getValue() {
     return this.value;
+  }
+
+  getUnicode() {
+    // iterate over bits
+    const bits = this.getBits();
+    let value = 0;
+    for (let i = 1; i <= bits.length; i++) {
+      // go from bitstring index to braille dot number
+      const bitNumber = i <= 3 ? (4 - i) : (10 - i);
+      if (bits[i - 1] === '1') value += Math.pow(2, bitNumber - 1);
+    }
+    let hex = (value).toString(16);
+    if (hex.length < 2) hex = '0' + hex;
+    return JSON.parse('"\\u28' + hex + '"');
   }
 
   getElement() {

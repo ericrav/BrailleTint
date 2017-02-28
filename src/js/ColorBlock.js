@@ -6,11 +6,13 @@ export default class ColorBlock {
   constructor(props) {
     const self = this;
     this.element = $('<div class="color-block"><div class="color-block__braille"></div></div>');
-    this.color = props.color ? this.rgb24to16(props.color) : { r: 0, g: 0, b: 0 };
+    this.color = props.braille ? this.brailleToRGB16(props.braille) : { r: 0, g: 0, b: 0 };
+    this.update = props.update;
 
     const getCellUpdater = (rgbPart) => {
       return ((value) => {
         self.color[rgbPart] = value;
+        self.update();
         self.setBG(self.color);
       });
     };
@@ -30,6 +32,31 @@ export default class ColorBlock {
     this.setBG(this.color);
   }
 
+  brailleToRGB16(str) {
+    const chars = str.split('');
+    return {
+      r: this.cellToValue(chars[0]),
+      g: this.cellToValue(chars[1]),
+      b: this.cellToValue(chars[2])
+    };
+  }
+
+  cellToValue(cell) {
+    const unicodeHex = parseInt(escape(cell).substr(-2), 16);
+    let bitstring = unicodeHex.toString(2);
+    // pad with 0s so bitstring is length 6
+    bitstring = Array(6 - bitstring.length + 1).join('0') + bitstring;
+    // iterate over bits
+    const bits = bitstring.split('');
+    let value = 0;
+    for (let i = 1; i <= bits.length; i++) {
+      // go from bitstring index to braille dot number
+      const bitNumber = i <= 3 ? (4 - i) : (10 - i);
+      if (bits[i - 1] === '1') value += Math.pow(2, bitNumber - 1);
+    }
+    return value;
+  }
+
   rgb24to16(rgb24) {
     return {
       r: Math.floor((rgb24.r / 255) * 63),
@@ -47,6 +74,10 @@ export default class ColorBlock {
     const g = Math.floor((color.g / 63) * 255);
     const b = Math.floor((color.b / 63) * 255);
     this.element.css('background-color', `rgb(${r}, ${g}, ${b})`);
+  }
+
+  getUnicode() {
+    return this.rCell.getUnicode() + this.gCell.getUnicode() + this.bCell.getUnicode();
   }
 
   getElement() {

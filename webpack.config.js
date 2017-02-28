@@ -40,7 +40,7 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new ExtractTextPlugin('styles.css'),
     new FaviconsWebpackPlugin('./src/favicon.png'),
-    new StyleExtHtmlWebpackPlugin()
+    // new StyleExtHtmlWebpackPlugin()
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

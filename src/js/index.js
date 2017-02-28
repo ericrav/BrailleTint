@@ -3,14 +3,14 @@ import ColorBlock from './ColorBlock';
 const block1 = new ColorBlock({ color: { r: 219, g: 58, b: 27 } });
 block1.getElement().appendTo('.palette');
 
-const block2 = new ColorBlock({ color: { r: 254, g: 190, b: 18 } });
+const block2 = new ColorBlock({ color: { r: 254, g: 209, b: 86 } });
 block2.getElement().appendTo('.palette');
-
-const block3 = new ColorBlock({ color: { r: 68, g: 154, b: 136 } });
-block3.getElement().appendTo('.palette');
 
 const block4 = new ColorBlock({ color: { r: 44, g: 154, b: 183 } });
 block4.getElement().appendTo('.palette');
+
+const block3 = new ColorBlock({ color: { r: 68, g: 154, b: 136 } });
+block3.getElement().appendTo('.palette');
 
 const block5 = new ColorBlock({ color: { r: 238, g: 131, b: 110 } });
 block5.getElement().appendTo('.palette');

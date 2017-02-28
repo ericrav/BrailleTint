@@ -17,6 +17,10 @@ body {
   h1 {
     margin: 0 24px;
     position: relative;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 60px;
+    color: #0b54a2;
 
     span, &:after {
       transition: opacity 0.1s ease-in;
@@ -41,12 +45,6 @@ body {
       }
     }
   }
-}
-h1 {
-  font-size: 28px;
-  font-weight: bold;
-  line-height: 60px;
-  color: #3a3a3a;
 }
 
 .palette {

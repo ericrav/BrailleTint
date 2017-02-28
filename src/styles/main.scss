@@ -1,0 +1,78 @@
+body {
+  transition: background-color 0.15s ease-out;
+}
+.braille {
+  display: inline-block;
+  position: relative;
+  font-size: 12px;
+  height: 4.4em;
+  width: 2.5em;
+  margin-right: 1.25em;
+
+  &--light {
+    .braille__dot:after {
+      background-color: white;
+    }
+  }
+
+
+  &__dot {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+
+    &:after {
+      content: '';
+      position: absolute;
+      transition: width 0.05s ease-out, height 0.05s ease-out, opacity 0.1s, background-color 0.15s;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 0.5em;
+      height: 0.5em;
+      background-color: black;
+      opacity: 0.4;
+      border-radius: 50%;
+    }
+
+    &:hover {
+      &:after {
+        height: 0.75em;
+        width: 0.75em;
+      }
+    }
+
+    &--active:after {
+      height: 1em;
+      width: 1em;
+      opacity: 0.85;
+    }
+
+    &--1, &--2, &--3 {
+      left: 0;
+    }
+
+    &--4, &--5, &--6 {
+      left: 1.5em;
+    }
+
+    &--1, &--4 {
+      top: 0;
+    }
+
+    &--2, &--5 {
+      top: 1.7em;
+    }
+
+    &--3, &--6 {
+      top: 3.4em;
+    }
+
+  }
+
+}

@@ -1,49 +1,26 @@
-import $ from 'jquery';
-import BrailleCell from './BrailleCell';
+import ColorBlock from './ColorBlock';
+
+const block1 = new ColorBlock({ color: { r: 219, g: 58, b: 27 } });
+block1.getElement().appendTo('.palette');
+
+const block2 = new ColorBlock({ color: { r: 254, g: 190, b: 18 } });
+block2.getElement().appendTo('.palette');
+
+const block3 = new ColorBlock({ color: { r: 68, g: 154, b: 136 } });
+block3.getElement().appendTo('.palette');
+
+const block4 = new ColorBlock({ color: { r: 44, g: 154, b: 183 } });
+block4.getElement().appendTo('.palette');
+
+const block5 = new ColorBlock({ color: { r: 238, g: 131, b: 110 } });
+block5.getElement().appendTo('.palette');
+
+const block6 = new ColorBlock({ color: { r: 93, g: 92, b: 93 } });
+block6.getElement().appendTo('.palette');
 
 
-// get WCAG luminosity value
-const getLuminance = (color) => {
-  let r = sRGBvalue(color.r / 63);
-  let g = sRGBvalue(color.g / 63);
-  let b = sRGBvalue(color.b / 63);
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-};
-
-const sRGBvalue = (c) => {
-  if (c <= 0.03928) c = c / 12.92;
-  else c = Math.pow(((c + 0.055) / 1.055), 2.4);
-  return c;
-};
-
-const updater = (part) => {
-  return ((value) => {
-    currentColor[part] = value;
-    setBG(currentColor);
-  });
-};
-
-const setBG = (color) => {
-  const L = getLuminance(color);
-  console.log(L);
-  rCell.setBGLuminance(L);
-  gCell.setBGLuminance(L);
-  bCell.setBGLuminance(L);
-  const r = Math.floor((color.r / 63) * 255);
-  const g = Math.floor((color.g / 63) * 255);
-  const b = Math.floor((color.b / 63) * 255);
-  $('body').css('background-color', `rgb(${r}, ${g}, ${b})`);
-};
-
-const currentColor = { r: 63, g: 63, b: 63 };
-
-const rCell = new BrailleCell({ updater: updater('r'), value: currentColor.r });
-rCell.getElement().appendTo('body');
-
-const gCell = new BrailleCell({ updater: updater('g'), value: currentColor.g });
-gCell.getElement().appendTo('body');
-
-const bCell = new BrailleCell({ updater: updater('b'), value: currentColor.b });
-bCell.getElement().appendTo('body');
-
-setBG(currentColor);
+// { r: 80, g: 81, b: 79 } });
+// { r: 242, g: 95, b: 92 } });
+// { r: 255, g: 224, b: 102 } });
+// { r: 36, g: 123, b: 160 } });
+// { r: 112, g: 193, b: 179 } });

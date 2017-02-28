@@ -1,6 +1,32 @@
 body {
-  transition: background-color 0.15s ease-out;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
 }
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.color-block {
+  position: relative;
+  flex-basis: 300px;
+  flex-grow: 1;
+  height: 150px;
+  transition: background-color 0.15s ease-out;
+
+  &__braille {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .braille {
   display: inline-block;
   position: relative;

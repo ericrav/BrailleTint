@@ -3,6 +3,21 @@ body {
   height: 100%;
   width: 100%;
   background-color: #f9f9f9;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.nav {
+  height: 60px;
+  width: 100%;
+
+  h1 {
+    margin: 0 24px;
+  }
+}
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 60px;
+  color: #3a3a3a;
 }
 
 .palette {
@@ -15,7 +30,7 @@ body {
   position: relative;
   flex-basis: 300px;
   flex-grow: 1;
-  height: 150px;
+  height: 200px;
   transition: background-color 0.15s ease-out;
 
   &__braille {

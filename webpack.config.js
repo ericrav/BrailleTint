@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: '#inline-source-map',
+  // devtool: '#inline-source-map',
   entry: [
     './src/js/index.js',
     './src/styles/main.scss'
@@ -35,10 +36,11 @@ module.exports = {
     ]
   },
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new ExtractTextPlugin('styles.css'),
-    // new StyleExtHtmlWebpackPlugin()
+    new FaviconsWebpackPlugin('./src/favicon.png'),
+    new StyleExtHtmlWebpackPlugin()
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

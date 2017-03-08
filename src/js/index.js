@@ -1,13 +1,16 @@
+import $ from 'jquery';
 import createHistory from 'history/createBrowserHistory';
 import ColorBlock from './ColorBlock';
+import { defaultPalette } from './constants';
 
 const history = createHistory();
 
-let brailleRGBs = decodeURIComponent(history.location.hash).substring(1).split(',') || [];
+let brailleRGBs = history.location.hash ? decodeURIComponent(history.location.hash).substring(1).split(',') : [];
 
 const validBrailleColor = str => /^[\u2800-\u283f]{3}$/.test(str);
 
-const defaultPalette = '⠶⠱⠰,⠷⠞⠪,⠑⠴⠭,⠂⠴⠌,⠗⠄⠛,⠲⠲⠲'.split(',');
+// unicode characters: '⠶⠱⠰,⠷⠞⠪,⠑⠴⠭,⠂⠴⠌,⠗⠄⠛,⠲⠲⠲'
+// const defaultPalette = '\u2836\u2831\u2830\x2c\u2837\u281e\u282a\x2c\u2811\u2834\u282d\x2c\u2802\u2834\u280c\x2c\u2817\u2804\u281b\x2c\u2832\u2832\u2832'.split(',');
 
 for (let i = 0; i < 6; i++) {
   if (brailleRGBs.length < (i + 1)) brailleRGBs.push(defaultPalette[i]);
@@ -15,30 +18,19 @@ for (let i = 0; i < 6; i++) {
 }
 
 const onUpdate = () => {
-  let hash = '';
-  hash += block1.getUnicode() + ',';
-  hash += block2.getUnicode() + ',';
-  hash += block3.getUnicode() + ',';
-  hash += block4.getUnicode() + ',';
-  hash += block5.getUnicode() + ',';
-  hash += block6.getUnicode();
+  const hash = blocks.map(block => block.getUnicode()).join(',');
   history.replace({ pathname: '/', hash: hash });
 };
 
-const block1 = new ColorBlock({ braille: brailleRGBs[0], update: onUpdate });
-block1.getElement().appendTo('.palette');
+const blocks = [];
 
-const block2 = new ColorBlock({ braille: brailleRGBs[1], update: onUpdate });
-block2.getElement().appendTo('.palette');
+for (let i = 0; i < 6; i++) {
+  const block = new ColorBlock({ braille: brailleRGBs[i], update: onUpdate });
+  block.getElement().appendTo('.palette');
+  blocks.push(block);
+}
 
-const block3 = new ColorBlock({ braille: brailleRGBs[2], update: onUpdate });
-block3.getElement().appendTo('.palette');
-
-const block4 = new ColorBlock({ braille: brailleRGBs[3], update: onUpdate });
-block4.getElement().appendTo('.palette');
-
-const block5 = new ColorBlock({ braille: brailleRGBs[4], update: onUpdate });
-block5.getElement().appendTo('.palette');
-
-const block6 = new ColorBlock({ braille: brailleRGBs[5], update: onUpdate });
-block6.getElement().appendTo('.palette');
+setTimeout(() => {
+  $('.footer').addClass('footer--active');
+  $('.palette').addClass('palette--footer');
+}, 18*1000);

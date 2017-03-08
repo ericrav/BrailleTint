@@ -36,7 +36,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin({ exclude: /constants\.js/ }),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new ExtractTextPlugin('styles.css'),
     new FaviconsWebpackPlugin('./src/favicon.png'),
